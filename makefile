@@ -9,6 +9,10 @@ install:
 	@docker-compose -f mongo_server/docker-compose.yaml up -d
 	@echo "$(G)[OK]$(C)"
 
+min:
+	@docker-compose -f mongo_server/docker-compose-min.yaml up -d
+	@echo "$(G)[OK]$(C)"
+
 redis:
 	@docker-compose -f redis_server/docker-compose.yaml up -d
 	@echo "$(G)[OK]$(C)"

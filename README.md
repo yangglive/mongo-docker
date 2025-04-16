@@ -44,14 +44,14 @@ compose文件: mongo_server/docker-compose.yaml
 * config_3
 
 #### shard_1
-* config_1_1
-* config_1_2
-* config_1_3
+* shard_1_1
+* shard_1_2
+* shard_1_3
   
 #### shard_2
-* config_2_1
-* config_2_2
-* config_2_3
+* shard_2_1
+* shard_2_2
+* shard_2_3
 
 #### mongos
 * mongos_1 27117
@@ -224,3 +224,55 @@ sh.shardCollection(namespace, key, unique, options)
 sh.shardCollection("<database>.<collection>", { <field1>: <1|"hashed">, ... } )
 ```
 
+### min最小安装,单节点
+
+
+将创建
+
+* config
+* shard1
+* shard2
+* mongos 27117
+
+```bash
+make min
+```
+
+```javascript
+rs.initiate(
+  {
+    _id: "config_rs",
+    configsvr: true,
+    members: [
+      { _id : 0, host : "config:27017" }
+    ]
+  }
+)
+```
+
+```javascript
+rs.initiate(
+  {
+    _id: "shard1_rs",
+    members: [
+      { _id : 0, host : "shard1:27017" }
+    ]
+  }
+)
+```
+
+```javascript
+rs.initiate(
+  {
+    _id: "shard2_rs",
+    members: [
+      { _id : 0, host : "shard2:27017" }
+    ]
+  }
+)
+```
+
+```javascript
+sh.addShard("shard1_rs/shard1:27017")
+sh.addShard("shard2_rs/shard2:27017")
+```
