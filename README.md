@@ -35,9 +35,7 @@ make build
 
 ### 创建docker
 
-compose文件
-
-mongo_server/docker-compose.yaml
+compose文件: mongo_server/docker-compose.yaml
 
 将创建
 
