@@ -192,7 +192,7 @@ db.getSiblingDB("admin").createUser(
 若要将每个分片添加到集群，请使用 sh.addShard() 方法。如果分片是副本集，请指定副本集的名称，然后指定该副本集的节点。在生产部署中，所有分片都应是副本集。
 以下操作将单个分片副本集添加到该集群中：
 
-```
+```javascript
 sh.addShard("shard1_rs/shard_1_1:27017,shard_1_2:27017,shard_1_3:27017")
 sh.addShard("shard2_rs/shard_2_1:27017,shard_2_2:27017,shard_2_3:27017")
 ```
