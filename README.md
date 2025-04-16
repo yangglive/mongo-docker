@@ -186,71 +186,28 @@ db.getSiblingDB("admin").createUser(
 )
 ```
 
-### Mongo routers
-Finally start the mongo routers:
-```
-docker-compose -f mongos/docker-compose.yaml up -d
-```
-```
-mongosh mongodb://localhost:30000
-```
-Inside the container, now add both shards to the cluster 
+### 向集群添加分片
+
+要继续，您必须连接到 mongos，并以分片集群的集群管理员用户身份进行身份验证。
+若要将每个分片添加到集群，请使用 sh.addShard() 方法。如果分片是副本集，请指定副本集的名称，然后指定该副本集的节点。在生产部署中，所有分片都应是副本集。
+以下操作将单个分片副本集添加到该集群中：
+
 ```
 sh.addShard("shard1_rs/shard_1_1:27017,shard_1_2:27017,shard_1_3:27017")
 sh.addShard("shard2_rs/shard_2_1:27017,shard_2_2:27017,shard_2_3:27017")
-
 ```
 
-**Note:** Replace ```192.168.1.83``` with your IPv4 address.
+更新用户
 
-
-### Sharding the collection
-Make sure your application is always connected to mongo routers, it is not suggested to directly connect to shard replica sets.
-
-Connect to mongo router and run this command to create a database.
-```
-use <database>
-```
-
-Starting in MonogDB 6.0 you don't need to run the below command to shard a collection. If you are using earlier versions then it is recommended to run it.
-```
-sh.enableSharding("<database>")
-```
-
-Shard your collection, this command will automatically enable sharding if your using versions Mongo 6.0 or later.
-```
-sh.shardCollection("<database>.<collection>", { <shard key field> : "hashed" , ... } )
-```
-
-You can check the sharding status of a database using ``sh.status()``, and data distribution across shards for a collection using: 
-```db.<collection>.getShardDistribution()```
-
-
-```
-db.getSiblingDB("admin").createUser(
-  {
-    user: "admin",
-    pwd: passwordPrompt(),
-    roles: [ 
-      "userAdminAnyDatabase",
-      "dbAdminAnyDatabase",
-      "readWriteAnyDatabase"
-    ]
-  }
-)
-
+```javascript
 db.getSiblingDB("admin").updateUser("admin",
   {
-    roles: [ 
-      "userAdminAnyDatabase",
-      "dbAdminAnyDatabase",
-      "readWriteAnyDatabase"
+    roles: [
+      { role: 'readWriteAnyDatabase', db: 'admin' },
+      { role: 'dbAdminAnyDatabase', db: 'admin' },
+      { role: 'clusterAdmin', db: 'admin' },
+      { role: 'userAdminAnyDatabase', db: 'admin' }
     ]
   }
 )
-
-
-use admin
-db.auth("admin","admin3edc*IK<")
-
 ```
