@@ -16,6 +16,17 @@ openssl rand -base64 756 > keyfile/key
 chmod 400  keyfile/key
 ```
 
+### 创建带keyfile的镜像
+
+Dockerfile
+
+```dockerfile
+FROM mongo:latest
+ADD keyfile /data/keyfile
+RUN chmod 400 /data/keyfile/key
+RUN chown -R mongodb:mongodb /data/keyfile
+```
+
 ### config 服务
 Run the below docker command to start the  config servers
 ```
