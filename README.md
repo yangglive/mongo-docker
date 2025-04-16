@@ -19,7 +19,6 @@ chmod 400  keyfile/key
 ### 创建带keyfile的镜像
 
 Dockerfile
-
 ```dockerfile
 FROM mongo:latest
 ADD keyfile /data/keyfile
@@ -27,7 +26,45 @@ RUN chmod 400 /data/keyfile/key
 RUN chown -R mongodb:mongodb /data/keyfile
 ```
 
-### config 服务
+
+### 创建镜像 mongo:keyfile
+
+```
+make build
+```
+
+### 创建docker
+
+compose文件
+
+mongo_server/docker-compose.yaml
+
+将创建
+
+#### config
+* config_1
+* config_2
+* config_3
+
+#### shard_1
+* config_1_1
+* config_1_2
+* config_1_3
+  
+#### shard_2
+* config_2_1
+* config_2_2
+* config_2_3
+
+#### mongos
+* mongos_1 27117
+* mongos_2 27118
+
+```
+make mongo
+```
+
+### 配置 config 服务
 Run the below docker command to start the  config servers
 ```
 make mongo
