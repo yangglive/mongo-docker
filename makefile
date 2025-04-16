@@ -5,7 +5,7 @@ build:
 	@docker build -t mongo:keyfile .
 	@echo "$(G)[OK]$(C)"
 
-mongo:
+install:
 	@docker-compose -f mongo_server/docker-compose.yaml up -d
 	@echo "$(G)[OK]$(C)"
 

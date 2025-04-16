@@ -26,7 +26,6 @@ RUN chmod 400 /data/keyfile/key
 RUN chown -R mongodb:mongodb /data/keyfile
 ```
 
-
 ### 创建镜像 mongo:keyfile
 
 ```bash
@@ -59,21 +58,22 @@ compose文件: mongo_server/docker-compose.yaml
 * mongos_2 27118
 
 ```bash
-make mongo
+make install
 ```
 
-### 配置 config 服务
-Run the below docker command to start the  config servers
-```
-make mongo
-docker-compose -f config_server/docker-compose.yaml up -d
-```
-Once the instances are up, connect to the container using the below command.
-```
+### 配置副本集
+
+> 通过本地主机接口将 mongosh 连接到一个 mongod 实例。您必须在与 mongod 实例相同的物理机器上运行 mongosh。
+
+登录 config_1
+
+```bash
 mongosh mongodb://localhost
 ```
-Now inside the container, we have to pass the instances as members to form a replica set.
-```
+
+使用 rs.initiate() 方法和配置文档启动副本集：
+
+```javascript
 rs.initiate(
   {
     _id: "config_rs",
@@ -86,25 +86,26 @@ rs.initiate(
   }
 )
 ```
-You can check if the replica set status using the below command.
-```
+
+查看
+
+```javascript
 rs.status()
 ```
 
-### Shard servers
-Repeat the same process for creating shard-1 and shard-2 docker containers.
-```
-docker-compose -f shard_server1/docker-compose.yaml up -d
-docker-compose -f shard_server2/docker-compose.yaml up -d
-```
-Login into the containers:
-```
-mongosh mongodb://localhost
+### 分片副本集
+
+> 通过本地主机接口将 mongosh 连接到一个 mongod 实例。您必须在与 mongod 实例相同的物理机器上运行 mongosh。
+
+登录 shard_1_1
+
+```bash
 mongosh mongodb://localhost
 ```
-And initiate the replica sets:
-#### In shard-1:
-```
+
+使用 rs.initiate() 方法和配置文档启动副本集：
+
+```javascript
 rs.initiate(
   {
     _id: "shard1_rs",
@@ -117,8 +118,16 @@ rs.initiate(
 )
 ```
 
-#### In shard-2:
+
+登录 shard_2_1
+
+```bash
+mongosh mongodb://localhost
 ```
+
+使用 rs.initiate() 方法和配置文档启动副本集：
+
+```javascript
 rs.initiate(
   {
     _id: "shard2_rs",
