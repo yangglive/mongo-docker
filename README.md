@@ -11,7 +11,7 @@
 
 ### 创建keyfile
 
-```
+```bash
 openssl rand -base64 756 > keyfile/key
 chmod 400  keyfile/key
 ```
@@ -29,7 +29,7 @@ RUN chown -R mongodb:mongodb /data/keyfile
 
 ### 创建镜像 mongo:keyfile
 
-```makefile
+```bash
 make build
 ```
 
@@ -60,7 +60,7 @@ mongo_server/docker-compose.yaml
 * mongos_1 27117
 * mongos_2 27118
 
-```
+```bash
 make mongo
 ```
 
