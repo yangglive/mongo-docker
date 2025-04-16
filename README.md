@@ -140,6 +140,52 @@ rs.initiate(
 )
 ```
 
+### 创建用户管理员
+
+> 重要
+创建第一个用户后，本地主机异常就不再可用。
+第一个用户必须拥有创建其他用户的特权，如具备 userAdminAnyDatabase 的用户。这样可以确保在自管理部署中的本地主机异常关闭后，您可以创建更多用户。
+如果至少一个用户没有创建用户的权限，一旦本地主机异常关闭，您可能无法使用创建或修改具有新特权的用户，因此无法访问必要的操作。
+使用 db.createUser() 方法添加用户。该用户应在 admin 数据库中至少拥有 userAdminAnyDatabase 角色。
+您必须连接到主节点才能创建用户。
+
+登录 mongos_1
+
+```javascript
+db.getSiblingDB("admin").createUser(
+  {
+    user: "admin",
+    pwd: passwordPrompt(),
+    roles: [
+      { role: 'readWriteAnyDatabase', db: 'admin' },
+      { role: 'dbAdminAnyDatabase', db: 'admin' },
+      { role: 'clusterAdmin', db: 'admin' },
+      { role: 'userAdminAnyDatabase', db: 'admin' }
+    ]
+  }
+)
+```
+
+
+### 创建分片本地用户管理员（可选）。
+
+登录 shard_1_1
+
+```javascript
+db.getSiblingDB("admin").createUser(
+  {
+    user: "admin",
+    pwd: passwordPrompt(), // or cleartext password
+    roles: [
+      { role: 'readWriteAnyDatabase', db: 'admin' },
+      { role: 'dbAdminAnyDatabase', db: 'admin' },
+      { role: 'clusterAdmin', db: 'admin' },
+      { role: 'userAdminAnyDatabase', db: 'admin' }
+    ]
+  }
+)
+```
+
 ### Mongo routers
 Finally start the mongo routers:
 ```
