@@ -197,7 +197,7 @@ sh.addShard("shard1_rs/shard_1_1:27017,shard_1_2:27017,shard_1_3:27017")
 sh.addShard("shard2_rs/shard_2_1:27017,shard_2_2:27017,shard_2_3:27017")
 ```
 
-更新用户
+### 更新用户
 
 ```javascript
 db.getSiblingDB("admin").updateUser("admin",
@@ -211,3 +211,10 @@ db.getSiblingDB("admin").updateUser("admin",
   }
 )
 ```
+
+### 集合分片
+
+```javascript
+sh.shardCollection("<database>.<collection>", { <key> : <direction> } )
+```
+
