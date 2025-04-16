@@ -175,7 +175,7 @@ db.getSiblingDB("admin").createUser(
 db.getSiblingDB("admin").createUser(
   {
     user: "admin",
-    pwd: passwordPrompt(), // or cleartext password
+    pwd: passwordPrompt(),
     roles: [
       { role: 'readWriteAnyDatabase', db: 'admin' },
       { role: 'dbAdminAnyDatabase', db: 'admin' },
