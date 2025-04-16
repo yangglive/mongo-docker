@@ -7,9 +7,14 @@
 3. 部署切片集群 https://www.mongodb.com/docs/manual/tutorial/deploy-shard-cluster/
 4. 使用keyfile部署切片集群 https://www.mongodb.com/docs/manual/tutorial/deploy-sharded-cluster-with-keyfile-access-control/
 
+> 要避免因 IP 地址变更而更新配置，请使用 DNS 主机名而非 IP 地址。在配置副本集成员或分片集群成员时，使用 DNS 主机名而非 IP 地址尤为重要。
+
 ### 创建keyfile
 
-> 不要使用ip地址作为分片节点
+```
+openssl rand -base64 756 > keyfile/key
+chmod 400  keyfile/key
+```
 
 ### config 服务
 Run the below docker command to start the  config servers
