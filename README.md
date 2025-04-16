@@ -216,11 +216,11 @@ db.getSiblingDB("admin").updateUser("admin",
 
 shardCollection https://www.mongodb.com/docs/manual/reference/method/sh.shardCollection/
 
-```
+```javascript
 sh.shardCollection(namespace, key, unique, options)
 ```
 
 ```javascript
-sh.shardCollection("teatak.user", { <field1>: <1|"hashed">, ... } )
+sh.shardCollection("<database>.<collection>", { <field1>: <1|"hashed">, ... } )
 ```
 
