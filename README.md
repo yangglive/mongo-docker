@@ -1,9 +1,9 @@
 ## docker mongodb 分片
 
 
-### Pre-requisites
+### 准备
 1. 安装docker
-2. 安装 mongodb https://www.mongodb.com/docs/manual/installation/
+2. 安装mongodb https://www.mongodb.com/docs/manual/installation/
 3. 部署切片集群 https://www.mongodb.com/docs/manual/tutorial/deploy-shard-cluster/
 4. 使用keyfile部署切片集群 https://www.mongodb.com/docs/manual/tutorial/deploy-sharded-cluster-with-keyfile-access-control/
 
@@ -214,7 +214,13 @@ db.getSiblingDB("admin").updateUser("admin",
 
 ### 集合分片
 
+shardCollection https://www.mongodb.com/docs/manual/reference/method/sh.shardCollection/
+
+```
+sh.shardCollection(namespace, key, unique, options)
+```
+
 ```javascript
-sh.shardCollection("<database>.<collection>", { <key> : <direction> } )
+sh.shardCollection("teatak.user", { <field1>: <1|"hashed">, ... } )
 ```
 
