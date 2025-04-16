@@ -3,7 +3,13 @@
 
 ### Pre-requisites
 1. 安装docker
-2. mongodb https://www.mongodb.com/docs/manual/installation/
+2. 安装 mongodb https://www.mongodb.com/docs/manual/installation/
+3. 部署切片集群 https://www.mongodb.com/docs/manual/tutorial/deploy-shard-cluster/
+4. 使用keyfile部署切片集群 https://www.mongodb.com/docs/manual/tutorial/deploy-sharded-cluster-with-keyfile-access-control/
+
+### 创建keyfile
+
+> 不要使用ip地址作为分片节点
 
 ### config 服务
 Run the below docker command to start the  config servers
