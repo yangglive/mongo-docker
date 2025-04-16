@@ -1,0 +1,120 @@
+services:
+  # config
+  config_1:
+    container_name: config_1
+    image: mongo:keyfile
+    command: mongod --keyFile /data/keyfile/key --configsvr --replSet config_rs --dbpath /data/db --port 27017
+    volumes:
+      - config_1_db:/data/db
+      - config_1_config:/data/configdb
+
+  config_2:
+    container_name: config_2
+    image: mongo:keyfile
+    command: mongod --keyFile /data/keyfile/key --configsvr --replSet config_rs --dbpath /data/db --port 27017
+    volumes:
+      - config_2_db:/data/db
+      - config_2_config:/data/configdb
+
+  config_3:
+    container_name: config_3
+    image: mongo:keyfile
+    command: mongod --keyFile /data/keyfile/key --configsvr --replSet config_rs --dbpath /data/db --port 27017
+    volumes:
+      - config_3_db:/data/db
+      - config_3_config:/data/configdb
+
+  # shard_1
+  shard_1_1:
+    container_name: shard_1_1
+    image: mongo:keyfile
+    command: mongod --keyFile /data/keyfile/key --shardsvr --replSet shard1_rs --dbpath /data/db --port 27017
+    volumes:
+      - shard_1_1_db:/data/db
+      - shard_1_1_config:/data/configdb
+
+  shard_1_2:
+    container_name: shard_1_2
+    image: mongo:keyfile
+    command: mongod --keyFile /data/keyfile/key --shardsvr --replSet shard1_rs --dbpath /data/db --port 27017
+    volumes:
+      - shard_1_2_db:/data/db
+      - shard_1_2_config:/data/configdb
+
+  shard_1_3:
+    container_name: shard_1_3
+    image: mongo:keyfile
+    command: mongod --keyFile /data/keyfile/key --shardsvr --replSet shard1_rs --dbpath /data/db --port 27017
+    volumes:
+      - shard_1_3_db:/data/db
+      - shard_1_3_config:/data/configdb
+
+  # shard_2
+  shard_2_1:
+    container_name: shard_2_1
+    image: mongo:keyfile
+    command: mongod --keyFile /data/keyfile/key --shardsvr --replSet shard2_rs --dbpath /data/db --port 27017
+    volumes:
+      - shard_2_1_db:/data/db
+      - shard_2_1_config:/data/configdb
+
+  shard_2_2:
+    container_name: shard_2_2
+    image: mongo:keyfile
+    command: mongod --keyFile /data/keyfile/key --shardsvr --replSet shard2_rs --dbpath /data/db --port 27017
+    volumes:
+      - shard_2_2_db:/data/db
+      - shard_2_2_config:/data/configdb
+
+  shard_2_3:
+    container_name: shard_2_3
+    image: mongo:keyfile
+    command: mongod --keyFile /data/keyfile/key --shardsvr --replSet shard2_rs --dbpath /data/db --port 27017
+    volumes:
+      - shard_2_3_db:/data/db
+      - shard_2_3_config:/data/configdb
+
+  # mongos
+  mongos_1:
+    container_name: mongos_1
+    image: mongo:keyfile
+    command: mongos --keyFile /data/keyfile/key --configdb config_rs/config_1:27017,config_2:27017,config_3:27017 --port 27017 --bind_ip_all
+    ports:
+      - 27117:27017
+    volumes:
+      - mongos_1_db:/data/db
+      - mongos_1_config:/data/configdb
+
+  mongos_2:
+    container_name: mongos_2
+    image: mongo:keyfile
+    command: mongos --keyFile /data/keyfile/key --configdb config_rs/config_1:27017,config_2:27017,config_3:27017 --port 27017 --bind_ip_all
+    ports:
+      - 27118:27017
+    volumes:
+      - mongos_2_db:/data/db
+      - mongos_2_config:/data/configdb
+
+volumes:
+  config_1_db:
+  config_2_db:
+  config_3_db:
+  config_1_config:
+  config_2_config:
+  config_3_config:
+  shard_1_1_db:
+  shard_1_2_db:
+  shard_1_3_db:
+  shard_1_1_config:
+  shard_1_2_config:
+  shard_1_3_config:
+  shard_2_1_db:
+  shard_2_2_db:
+  shard_2_3_db:
+  shard_2_1_config:
+  shard_2_2_config:
+  shard_2_3_config:
+  mongos_1_db:
+  mongos_2_db:
+  mongos_1_config:
+  mongos_2_config:

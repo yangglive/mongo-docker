@@ -1,0 +1,13 @@
+services:
+  # redis
+  redis_1:
+    container_name: redis_1
+    image: redis:latest
+    command: redis-server --requirepass "admin3edc*IK<"
+    ports:
+      - 6379:6379
+    volumes:
+      - redis_data:/data
+
+volumes:
+  redis_data:
