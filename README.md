@@ -29,7 +29,7 @@ RUN chown -R mongodb:mongodb /data/keyfile
 
 ### 创建镜像 mongo:keyfile
 
-```
+```makefile
 make build
 ```
 
