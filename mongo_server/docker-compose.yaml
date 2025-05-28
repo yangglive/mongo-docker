@@ -4,6 +4,7 @@ services:
     container_name: config_1
     image: mongo:keyfile
     command: mongod --keyFile /data/keyfile/key --configsvr --replSet config_rs --dbpath /data/db --port 27017
+    restart: unless-stopped
     volumes:
       - config_1_db:/data/db
       - config_1_config:/data/configdb
@@ -12,6 +13,7 @@ services:
     container_name: config_2
     image: mongo:keyfile
     command: mongod --keyFile /data/keyfile/key --configsvr --replSet config_rs --dbpath /data/db --port 27017
+    restart: unless-stopped
     volumes:
       - config_2_db:/data/db
       - config_2_config:/data/configdb
@@ -20,6 +22,7 @@ services:
     container_name: config_3
     image: mongo:keyfile
     command: mongod --keyFile /data/keyfile/key --configsvr --replSet config_rs --dbpath /data/db --port 27017
+    restart: unless-stopped
     volumes:
       - config_3_db:/data/db
       - config_3_config:/data/configdb
@@ -29,6 +32,7 @@ services:
     container_name: shard_1_1
     image: mongo:keyfile
     command: mongod --keyFile /data/keyfile/key --shardsvr --replSet shard1_rs --dbpath /data/db --port 27017
+    restart: unless-stopped
     volumes:
       - shard_1_1_db:/data/db
       - shard_1_1_config:/data/configdb
@@ -37,6 +41,7 @@ services:
     container_name: shard_1_2
     image: mongo:keyfile
     command: mongod --keyFile /data/keyfile/key --shardsvr --replSet shard1_rs --dbpath /data/db --port 27017
+    restart: unless-stopped
     volumes:
       - shard_1_2_db:/data/db
       - shard_1_2_config:/data/configdb
@@ -45,6 +50,7 @@ services:
     container_name: shard_1_3
     image: mongo:keyfile
     command: mongod --keyFile /data/keyfile/key --shardsvr --replSet shard1_rs --dbpath /data/db --port 27017
+    restart: unless-stopped
     volumes:
       - shard_1_3_db:/data/db
       - shard_1_3_config:/data/configdb
@@ -54,6 +60,7 @@ services:
     container_name: shard_2_1
     image: mongo:keyfile
     command: mongod --keyFile /data/keyfile/key --shardsvr --replSet shard2_rs --dbpath /data/db --port 27017
+    restart: unless-stopped
     volumes:
       - shard_2_1_db:/data/db
       - shard_2_1_config:/data/configdb
@@ -62,6 +69,7 @@ services:
     container_name: shard_2_2
     image: mongo:keyfile
     command: mongod --keyFile /data/keyfile/key --shardsvr --replSet shard2_rs --dbpath /data/db --port 27017
+    restart: unless-stopped
     volumes:
       - shard_2_2_db:/data/db
       - shard_2_2_config:/data/configdb
@@ -70,6 +78,7 @@ services:
     container_name: shard_2_3
     image: mongo:keyfile
     command: mongod --keyFile /data/keyfile/key --shardsvr --replSet shard2_rs --dbpath /data/db --port 27017
+    restart: unless-stopped
     volumes:
       - shard_2_3_db:/data/db
       - shard_2_3_config:/data/configdb
@@ -79,6 +88,7 @@ services:
     container_name: mongos_1
     image: mongo:keyfile
     command: mongos --keyFile /data/keyfile/key --configdb config_rs/config_1:27017,config_2:27017,config_3:27017 --port 27017 --bind_ip_all
+    restart: unless-stopped
     ports:
       - 27117:27017
     volumes:
@@ -89,6 +99,7 @@ services:
     container_name: mongos_2
     image: mongo:keyfile
     command: mongos --keyFile /data/keyfile/key --configdb config_rs/config_1:27017,config_2:27017,config_3:27017 --port 27017 --bind_ip_all
+    restart: unless-stopped
     ports:
       - 27118:27017
     volumes:

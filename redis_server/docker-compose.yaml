@@ -1,9 +1,10 @@
 services:
   # redis
-  redis_1:
-    container_name: redis_1
+  redis:
+    container_name: redis
     image: redis:latest
     command: redis-server --requirepass "admin3edc*IK<"
+    restart: unless-stopped
     ports:
       - 6379:6379
     volumes:
